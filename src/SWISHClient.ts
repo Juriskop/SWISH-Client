@@ -12,4 +12,8 @@ export class SWISHClient {
     async getProgramCodeAsJson(programName: string): Promise<SWISHProgramDataJson> {
         throw new Error('Not yet implemented');
     }
+
+    async getProgramCodeAsRawText(programName: string): Promise<string> {
+        throw new Error('Not yet implemented');
+    }
 }

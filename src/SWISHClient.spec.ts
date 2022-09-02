@@ -16,7 +16,7 @@ describe('SWISHClient', () => {
     })
 
     describe('get program code', () => {
-        it('as json', async () => {
+        it('can retrieve program code as json', async () => {
             const result = await swish.getProgramCodeAsJson('c6f177aadb4800a7fa146ab948179a97152f1ccd');
             expect(result.data).toBe('safe_clause(Head, Body) :- \\\\+ predicate_property(Head, built_in), functor(P, Name, _), Name \\\\== call, clause(Head, Body).');
             expect(result.meta).toEqual({
@@ -37,7 +37,11 @@ describe('SWISHClient', () => {
                     "title": "An attempt to define a clause which works with built in predicates without throwing."
                 }
             });
+        });
 
+        it('can retrieve program code as text', async () => {
+            const result = await swish.getProgramCodeAsJson('c6f177aadb4800a7fa146ab948179a97152f1ccd');
+            expect(result).toBe('safe_clause(Head, Body) :- \\\\+ predicate_property(Head, built_in), functor(P, Name, _), Name \\\\== call, clause(Head, Body).');
         })
     });
 });
