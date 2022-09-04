@@ -20,9 +20,10 @@
     "TS",
     "HTTP Digest Auth"
   ],
-  "author": "TimothyGillespie <timothy@gillespie.eu>",
+  "author": "MathiasTruschel <mtruschel@gmail.com>",
   "contributors": [
-    "TimothyGillespie <timothy@gillespie.eu>"
+    "TimothyGillespie <timothy@gillespie.eu>",
+    "MathiasTruschel <mtruschel@gmail.com>"
   ],
   "license": "No License",
   "private": true,
