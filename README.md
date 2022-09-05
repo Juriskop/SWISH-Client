@@ -27,6 +27,7 @@ cd ..
 cd axios-http-digest-auth
 
 yarn install
+# I had to run 'yarn link "@juriskop/swish-node-digest-auth" first for 'yarn run build' to work..
 yarn run build
 yarn link
 
