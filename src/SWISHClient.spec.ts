@@ -35,7 +35,7 @@ describe('SWISHClient', () => {
                     "public": true,
                     "time": 1657111287.2864354,
                     "title": "An attempt to define a clause which works with built in predicates without throwing."
-                
+    
             }); 
         });
 
@@ -44,9 +44,22 @@ describe('SWISHClient', () => {
             expect(result).toBe('safe_clause(Head, Body) :- \\+ predicate_property(Head, built_in), functor(P, Name, _), Name \\== call, clause(Head, Body).');
         });
 
-        it('can retrieve result from query', async () => {
-            const result = await swish.getQueryResult('learn_prolog.pl', "istStrafbar(X, 'Mathias', 'vermoebeln').");
-            expect(result.data.answer.data.event).toEqual('success');
-        })
+        it('can retrieve result from query, refencing to existing program.pl', async () => {
+            const result = await swish.queryExistingProgram('learn_prolog.pl', "istStrafbar(X, 'Mathias', 'vermoebeln').");
+            expect(result.data.event).toEqual('success');
+        });
+
+        it('can retrieve result from query, that includes the complete Programcode', async () => {
+            const result = await swish.queryCustomProgram("%% Faktenbasis:\n\nistTaeter('Hugo').\nistOpfer('Mathias').\nhatVorsatz('Hugo').\nistTat('vermoebeln').\n\n%% \"Logik\":\n\nistStrafbar(Taeter, Opfer, Tat) :-\n    istTaeter(Taeter),\n    istOpfer(Opfer),\n    istTat(Tat),\n    \n    hatVorsatz(Taeter).\n", "istStrafbar('Hugo', 'Mathias', 'vermoebeln').");
+            expect(result.data.event).toEqual('success');
+        });
+
+        /// doesn't work yet
+        it('can retrieve result from query, refencing to existing program as Hash', async () => {
+            const result = await swish.queryExistingProgram('74ed1936497391bf3948a454b11bfee12e824b40', "istTat('vermoebeln').");
+            expect(result.data.event).toEqual('success');
+            const result2 = await swish.queryExistingProgram('74ed1936497391bf3948a454b11bfee12e824b40', "istTat('Hugo').");
+            expect(result2.data.event).toEqual('failure');
+        }) 
     });
 });

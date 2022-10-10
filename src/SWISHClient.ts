@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import {httpDigestAuth} from '@juriskop/axios-http-digest-auth';
 import {SWISHProgramDataJson} from "./types";
+import {AxiosResponseAnswer} from "./types";
 import {joinToUrl} from "./URLProcessor";
 
 export class SWISHClient {
@@ -27,19 +28,34 @@ export class SWISHClient {
         return response.data;
     }
 
-    async getQueryResult(programName: string, query: string): Promise<AxiosResponse> {
-        let programCode = await this.getProgramCodeAsRawText(programName);
+    async queryExistingProgram(programName: string, query: string): Promise<AxiosResponseAnswer> {
+        let programCode = `:- include('${programName}').`;
         let response = await this.axiosInstance.post(`${joinToUrl([this.baseUrl, "/pengine/create"])}`, 
-        {
-            "src_text": programCode,
-            "format": "json",
-            "application": "swish",
-            "destroy": true,
-            "ask": query,
-            "solutions": "all",
-            "chunk": 10000
-        });
+            {
+                "src_text": programCode,
+                "format": "json",
+                "application": "swish",
+                "destroy": true,
+                "ask": query,
+                "solutions": "all",
+                "chunk": 10000
+            });
 
-        return response;
+        return response.data.answer;
+    }
+
+    async queryCustomProgram(programCode: string, query: string): Promise<AxiosResponse> {
+        let response = await this.axiosInstance.post(`${joinToUrl([this.baseUrl, "/pengine/create"])}`, 
+            {
+                "src_text": programCode,
+                "format": "json",
+                "application": "swish",
+                "destroy": true,
+                "ask": query,
+                "solutions": "all",
+                "chunk": 10000
+            });
+
+        return response.data.answer;
     }
 }
