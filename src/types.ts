@@ -15,21 +15,44 @@ export interface SWISHProgramDataJson {
         public: string;
         symbolic: string;
         time: number;
-    }
+    };
 }
 
-export interface AxiosResponseAnswer {
+export interface SWISHQuerySuccessfulAnswer {
         data: {
-            data: [
-                {}
-            ];
-            event : string;
+            data: Record<string, any>[];
+            event: 'success';
             id: string;
             more: boolean;
-            projection: [];
+            projection: string[];
             time: number;
-        }
+        };
         event: string;
+        id: string;   
+}
+
+export interface SWISHQueryFailureAnswer {
+    data: {
+        event: 'failure';
         id: string;
-    
+        time: number;
+    };
+    event: string;
+    id: string;   
+}
+
+export interface SWISHQueryErrorAnswer {
+    data: {
+        arg1?: any;
+        arg2?: any;
+        arg3?: any;
+        arg4?: any;
+        arg5?: any;
+        code: string;
+        data: string;
+        event: 'error';
+        id: string;
+    };
+    event: string;
+    id: string;
 }

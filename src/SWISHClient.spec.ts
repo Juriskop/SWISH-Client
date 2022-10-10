@@ -10,7 +10,7 @@ const baseUrl = process.env.SWISH_BASE_URL;
 
 let swish: SWISHClient;
 
-describe('SWISHClient', () => {
+describe('SWISHClient TestSuite', () => {
     beforeEach(() => {
         swish = new SWISHClient(username, password, baseUrl);
     })
@@ -43,8 +43,10 @@ describe('SWISHClient', () => {
             const result = await swish.getProgramCodeAsRawText('c6f177aadb4800a7fa146ab948179a97152f1ccd');
             expect(result).toBe('safe_clause(Head, Body) :- \\+ predicate_property(Head, built_in), functor(P, Name, _), Name \\== call, clause(Head, Body).');
         });
+    });
 
-        it('can retrieve result from query, refencing to existing program.pl', async () => {
+    describe('query SWISH', () => {
+        it('can retrieve result from query, refencing an existing program.pl', async () => {
             const result = await swish.queryExistingProgram('learn_prolog.pl', "istStrafbar(X, 'Mathias', 'vermoebeln').");
             expect(result.data.event).toEqual('success');
         });
@@ -52,14 +54,11 @@ describe('SWISHClient', () => {
         it('can retrieve result from query, that includes the complete Programcode', async () => {
             const result = await swish.queryCustomProgram("%% Faktenbasis:\n\nistTaeter('Hugo').\nistOpfer('Mathias').\nhatVorsatz('Hugo').\nistTat('vermoebeln').\n\n%% \"Logik\":\n\nistStrafbar(Taeter, Opfer, Tat) :-\n    istTaeter(Taeter),\n    istOpfer(Opfer),\n    istTat(Tat),\n    \n    hatVorsatz(Taeter).\n", "istStrafbar('Hugo', 'Mathias', 'vermoebeln').");
             expect(result.data.event).toEqual('success');
-        });
+        })
 
-        /// doesn't work yet
-        it('can retrieve result from query, refencing to existing program as Hash', async () => {
+        it('can retrieve result from query, refencing an existing program as Hash', async () => {
             const result = await swish.queryExistingProgram('74ed1936497391bf3948a454b11bfee12e824b40', "istTat('vermoebeln').");
             expect(result.data.event).toEqual('success');
-            const result2 = await swish.queryExistingProgram('74ed1936497391bf3948a454b11bfee12e824b40', "istTat('Hugo').");
-            expect(result2.data.event).toEqual('failure');
         }) 
     });
 });

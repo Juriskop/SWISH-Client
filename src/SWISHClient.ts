@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import {httpDigestAuth} from '@juriskop/axios-http-digest-auth';
-import {SWISHProgramDataJson} from "./types";
-import {AxiosResponseAnswer} from "./types";
+import {SWISHProgramDataJson, SWISHQueryErrorAnswer, SWISHQueryFailureAnswer} from "./types";
+import {SWISHQuerySuccessfulAnswer} from "./types";
 import {joinToUrl} from "./URLProcessor";
 
 export class SWISHClient {
@@ -28,7 +28,7 @@ export class SWISHClient {
         return response.data;
     }
 
-    async queryExistingProgram(programName: string, query: string): Promise<AxiosResponseAnswer> {
+    async queryExistingProgram(programName: string, query: string): Promise<SWISHQuerySuccessfulAnswer|SWISHQueryFailureAnswer|SWISHQueryErrorAnswer> {
         let programCode = `:- include('${programName}').`;
         let response = await this.axiosInstance.post(`${joinToUrl([this.baseUrl, "/pengine/create"])}`, 
             {
@@ -44,9 +44,8 @@ export class SWISHClient {
         return response.data.answer;
     }
 
-    async queryCustomProgram(programCode: string, query: string): Promise<AxiosResponse> {
-        let response = await this.axiosInstance.post(`${joinToUrl([this.baseUrl, "/pengine/create"])}`, 
-            {
+    async queryCustomProgram(programCode: string, query: string): Promise<SWISHQuerySuccessfulAnswer|SWISHQueryFailureAnswer|SWISHQueryErrorAnswer> {
+        let response = await this.axiosInstance.post(`${joinToUrl([this.baseUrl, "/pengine/create"])}`, {
                 "src_text": programCode,
                 "format": "json",
                 "application": "swish",
