@@ -42,6 +42,11 @@ describe('SWISHClient', () => {
         it('can retrieve program code as text', async () => {
             const result = await swish.getProgramCodeAsRawText('c6f177aadb4800a7fa146ab948179a97152f1ccd');
             expect(result).toBe('safe_clause(Head, Body) :- \\+ predicate_property(Head, built_in), functor(P, Name, _), Name \\== call, clause(Head, Body).');
+        });
+
+        it('can retrieve result from query', async () => {
+            const result = await swish.getQueryResult('learn_prolog.pl', "istStrafbar(X, 'Mathias', 'vermoebeln').");
+            expect(result.data.answer.data.event).toEqual('success');
         })
     });
 });

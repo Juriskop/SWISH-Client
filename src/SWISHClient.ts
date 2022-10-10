@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import {httpDigestAuth} from '@juriskop/axios-http-digest-auth';
 import {SWISHProgramDataJson} from "./types";
-import { joinToUrl } from "./URLProcessor";
+import {joinToUrl} from "./URLProcessor";
 
 export class SWISHClient {
     private axiosInstance = axios.create({});
@@ -25,5 +25,21 @@ export class SWISHClient {
         let response = await this.axiosInstance.get(`${joinToUrl([this.baseUrl, "/p/", programName])}?format=raw`, {responseType:"text"});
 
         return response.data;
+    }
+
+    async getQueryResult(programName: string, query: string): Promise<AxiosResponse> {
+        let programCode = await this.getProgramCodeAsRawText(programName);
+        let response = await this.axiosInstance.post(`${joinToUrl([this.baseUrl, "/pengine/create"])}`, 
+        {
+            "src_text": programCode,
+            "format": "json",
+            "application": "swish",
+            "destroy": true,
+            "ask": query,
+            "solutions": "all",
+            "chunk": 10000
+        });
+
+        return response;
     }
 }
