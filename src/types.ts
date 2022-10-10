@@ -1,7 +1,7 @@
 export interface SWISHProgramDataJson {
     chats: {
         total: number;
-    },
+    };
     data: string;
     meta: {
         author: string;
@@ -16,4 +16,20 @@ export interface SWISHProgramDataJson {
         symbolic: string;
         time: number;
     }
+}
+
+export interface AxiosResponseAnswer {
+        data: {
+            data: [
+                {}
+            ];
+            event : string;
+            id: string;
+            more: boolean;
+            projection: [];
+            time: number;
+        }
+        event: string;
+        id: string;
+    
 }
