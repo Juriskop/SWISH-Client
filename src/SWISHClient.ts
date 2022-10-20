@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import {httpDigestAuth} from '@juriskop/axios-http-digest-auth';
-import {SWISHProgramDataJson, SWISHQueryErrorAnswer, SWISHQueryFailureAnswer} from "./types";
-import {SWISHQuerySuccessfulAnswer} from "./types";
+import {SWISHProgramDataJson, SWISHQuerySuccessfulAnswer, SWISHQueryErrorAnswer, SWISHQueryFailureAnswer} from "./types";
 import {joinToUrl} from "./URLProcessor";
 
 export class SWISHClient {
