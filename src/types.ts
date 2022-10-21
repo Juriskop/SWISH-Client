@@ -19,21 +19,20 @@ export interface SWISHProgramDataJson {
 }
 
 export interface SWISHQuerySuccessfulAnswer {
-    data: {
-        data: Record<string, any>[];
-        event: 'success';
-        id: string;
-        more: boolean;
-        projection: string[];
-        time: number;
-    };
-    event: string;
-    id: string;   
+        data: {
+            data: Record<string, any>[];
+            event: 'success';
+            id: string;
+            more: boolean;
+            projection: string[];
+            time: number;
+        };
+        event: string;
+        id: string;   
 }
 
 export interface SWISHQueryFailureAnswer {
     data: {
-        data?: Record<string, any>[];
         event: 'failure';
         id: string;
         time: number;
@@ -50,10 +49,9 @@ export interface SWISHQueryErrorAnswer {
         arg4?: any;
         arg5?: any;
         code: string;
-        data: Record<string, any>[];
+        data: string;
         event: 'error';
         id: string;
-        time?: number;
     };
     event: string;
     id: string;
