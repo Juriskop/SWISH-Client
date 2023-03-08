@@ -4,7 +4,7 @@
   "description": "A JavaScript/TypeScript client for interfacing with SWISH supporting HTTP digest auth.",
   "main": "dist/index",
   "scripts": {
-    "build": "tsc -p ./tsconfig.build.json",
+    "build": "tsc -p ./tsconfig.build.json && cp ./package.json ./dist/package.json && cp ./README.md ./dist/README.md",
     "test": "jest"
   },
   "repository": {
@@ -25,8 +25,8 @@
     "Timothy Gillespie <timothy@gillespie.eu>",
     "Mathias Truschel <mtruschel@gmail.com>"
   ],
-  "license": "No License",
-  "private": true,
+  "license": "UNLICENSED",
+  "private": false,
   "dependencies": {
     "axios": "^0.27.2"
   },
