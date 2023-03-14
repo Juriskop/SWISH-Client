@@ -2,7 +2,7 @@
   "name": "@juriskop/swish-client",
   "version": "1.0.1",
   "description": "A JavaScript/TypeScript client for interfacing with SWISH supporting HTTP digest auth.",
-  "main": "dist/index",
+  "main": "index",
   "scripts": {
     "build": "tsc -p ./tsconfig.build.json && cp ./package.json ./dist/package.json && cp ./README.md ./dist/README.md",
     "test": "jest"
