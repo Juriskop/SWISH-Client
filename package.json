@@ -1,6 +1,6 @@
 {
   "name": "@juriskop/swish-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A JavaScript/TypeScript client for interfacing with SWISH supporting HTTP digest auth.",
   "main": "dist/index",
   "scripts": {
